@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>flickr music player</title>
+</head>
+
+<body>
+<form onsubmit="play(); return false">
+URL: <input type="text" name="url" id="form_url" value="" />
+<input type="submit" value="play" />
+</form>
+<form onsubmit="stop(); return false">
+<input type="submit" value="stop" />
+</form>
+<script src="zlib.js"></script>
+<script src="png.js"></script>
+<script src="player.js"></script>
+<script>
+var player = null;
+function play() {
+    var url = document.getElementById("form_url").value;
+    console.log(url);
+    player = new window.Player();
+    player.play(url);
+}
+
+function stop() {
+    player.stop();
+}
+</script>
+</body>
+</html>

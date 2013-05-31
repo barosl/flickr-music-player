@@ -1,0 +1,3 @@
+[submodule "lib/png.js"]
+	path = lib/png.js
+	url = git://github.com/devongovett/png.js.git
