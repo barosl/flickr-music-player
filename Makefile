@@ -1,4 +1,4 @@
-OUTPUT = player.js png.js zlib.js
+OUTPUT = player.js png.js zlib.js jquery-2.0.2.min.js
 
 .PHONY: all
 all: $(OUTPUT)
@@ -11,6 +11,9 @@ png.js:
 
 zlib.js:
 	cp lib/png.js/zlib.js ./zlib.js
+
+jquery-2.0.2.min.js:
+	cp lib/jquery-2.0.2.min.js ./jquery-2.0.2.min.js
 
 .PHONY: clean
 clean:
