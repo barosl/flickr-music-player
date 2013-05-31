@@ -77,7 +77,7 @@ def encode_to_png(data, cover=None, font=None):
 				else:
 					px = new_cover_buf[i, j]
 			else:
-				px = tuple(ord(x) for x in new_data[data_pos:data_pos+3]+'\0')
+				px = tuple(ord(x) for x in new_data[data_pos:data_pos+3]+'\xFF')
 				data_pos += 3
 
 				if len(px) == 1: px = (0, 0, 0, 0)
