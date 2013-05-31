@@ -86,7 +86,11 @@ class Player
 
     on_item_click: (photo_id) ->
         url = photoset[photo_id]
-        $("#nowplaying").attr("src", url)
-        @play(url)
+        proxy_url = @get_proxy_url(url)
+        $("#nowplaying").attr("src", proxy_url)
+        @play(proxy_url)
+
+    get_proxy_url: (url) ->
+        "/proxy/?url=" + url
 
 window.Player = Player
