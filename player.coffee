@@ -1,7 +1,7 @@
 window.AudioContext = window.AudioContext||window.webkitAudioContext
 
 class Player
-    constructor: ->
+    constructor: (@flickr_keys) ->
         @source = null
 
     extract_audio: (idata, length) ->
@@ -49,5 +49,33 @@ class Player
     stop: ->
         @source?.stop(0)
         @source = null
+
+    get_photoset: ->
+        url = "http://api.flickr.com/services/rest/" +
+        "?method=flickr.photosets.getPhotos&api_key=" +
+        @flickr_keys.api_key + "&photoset_id=" +
+        @flickr_keys.photoset_id + "&format=json" +
+        "&nojsoncallback=1"
+
+        $.getJSON(url).done (data) =>
+            photoset = data.photoset.photo
+            for photo in photoset
+                @get_sizes(photo.id)
+
+    get_sizes: (photo_id) ->
+        url = "http://api.flickr.com/services/rest/" +
+        "?method=flickr.photos.getSizes&api_key=" +
+        @flickr_keys.api_key + "&photo_id=" +
+        photo_id + "&format=json" +
+        "&nojsoncallback=1"
+
+        $.getJSON(url).done (data) =>
+            size = data.sizes.size
+            for item in size
+                console.log item.source
+                if item.label == "Small"
+                    img = $("<img />").attr("src", item.source)
+                    $("#photoset").append(img)
+
 
 window.Player = Player

@@ -6,6 +6,10 @@
 </head>
 
 <body>
+
+<div id="photoset">
+</div>
+
 <form onsubmit="play(); return false">
 URL: <input type="text" name="url" id="form_url" value="" />
 <input type="submit" value="play" />
@@ -19,10 +23,19 @@ URL: <input type="text" name="url" id="form_url" value="" />
 <script src="jquery-2.0.2.min.js"></script>
 <script>
 var player = null;
+var flickr_keys = null;
+
+$(document).ready(function() {
+    $.getJSON("flickr_keys.json", function(data) {
+        flickr_keys = data;
+        player = new window.Player(flickr_keys);
+        player.get_photoset();
+    });
+});
+
 function play() {
     var url = document.getElementById("form_url").value;
     console.log(url);
-    player = new window.Player();
     player.play(url);
 }
 
