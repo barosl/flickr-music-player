@@ -1,8 +1,9 @@
 *.pyc
-flickr_keys.py
+flickr_keys.*
 *.ogg
 *.mp3
 *.png
 player.js
 zlib.js
 png.js
+jquery-2.0.2.min.js

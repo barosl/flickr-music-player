@@ -3,25 +3,45 @@
 <head>
 <meta charset="utf-8" />
 <title>flickr music player</title>
+<style>
+#photoset {
+    width: 100px;
+}
+#photoset img {
+    float: left;
+}
+#nowplaying {
+    left: 200px;
+    width: 800px;
+}
+</style>
 </head>
 
 <body>
-<form onsubmit="play(); return false">
-URL: <input type="text" name="url" id="form_url" value="" />
-<input type="submit" value="play" />
-</form>
-<form onsubmit="stop(); return false">
-<input type="submit" value="stop" />
-</form>
+
+<div id="photoset">
+</div>
+<img id="nowplaying" />
+
 <script src="zlib.js"></script>
 <script src="png.js"></script>
 <script src="player.js"></script>
+<script src="jquery-2.0.2.min.js"></script>
 <script>
 var player = null;
+var flickr_keys = null;
+
+$(document).ready(function() {
+    $.getJSON("flickr_keys.json", function(data) {
+        flickr_keys = data;
+        player = new window.Player(flickr_keys);
+        player.get_photoset();
+    });
+});
+
 function play() {
     var url = document.getElementById("form_url").value;
     console.log(url);
-    player = new window.Player();
     player.play(url);
 }
 
