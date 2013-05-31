@@ -3,6 +3,7 @@ window.AudioContext = window.AudioContext||window.webkitAudioContext
 class Player
     constructor: (@flickr_keys) ->
         @source = null
+        @photoset = {}
 
     extract_audio: (idata, length) ->
         view = new Uint8Array(idata)
@@ -72,10 +73,20 @@ class Player
         $.getJSON(url).done (data) =>
             size = data.sizes.size
             for item in size
-                console.log item.source
                 if item.label == "Small"
                     img = $("<img />").attr("src", item.source)
+                    handler = (pid, this_) ->
+                        ->
+                            this_.on_item_click(pid)
+                    img.on('click', handler(photo_id, this))
                     $("#photoset").append(img)
 
+                if item.label = "Original"
+                    photoset[photo_id] = item.source
+
+    on_item_click: (photo_id) ->
+        url = photoset[photo_id]
+        $("#nowplaying").attr("src", url)
+        @play(url)
 
 window.Player = Player
