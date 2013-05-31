@@ -5,14 +5,21 @@
 <title>flickr music player</title>
 <style>
 #photoset {
-    width: 100px;
+	width: 320px;
+	height: 530px;
+	overflow: scroll;
+	float: left;
+	position: fixed;
 }
 #photoset img {
+	width: 300px;
     float: left;
 }
 #nowplaying {
     left: 200px;
-    width: 800px;
+/*    width: 800px;*/
+	margin-left: 340px;
+	height: 530px;
 }
 </style>
 </head>
@@ -21,7 +28,9 @@
 
 <div id="photoset">
 </div>
+<a target="_blank" id="nowplaying_a">
 <img id="nowplaying" />
+</a>
 
 <script src="/static/zlib.js"></script>
 <script src="/static/png.js"></script>
