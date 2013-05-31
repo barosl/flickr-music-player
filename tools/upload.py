@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 import flickr_api
+import tempfile
+import convert
+import os
 
 def main():
 	def login():
@@ -14,7 +17,19 @@ def main():
 	try: flickr_api.set_auth_handler('auth.txt')
 	except IOError: flickr_api.set_auth_handler(login())
 
-	flickr_api.upload(photo_file='in.jpg', title='Test twice')
+#	flickr_api.upload(photo_file='in.jpg', title='Test twice')
+
+	img_data = convert.encode_to_png(open('in.mp3', 'rb').read())
+
+	try:
+		fp = tempfile.NamedTemporaryFile(delete=False)
+		fp.write(img_data)
+		fp.close()
+
+		flickr_api.upload(photo_file=fp.name, title='Final fusion')
+	finally:
+		try: os.remove(fp.name)
+		except OSError: pass
 
 if __name__ == '__main__':
 	main()
