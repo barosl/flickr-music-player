@@ -88,6 +88,7 @@ class Player
         url = photoset[photo_id]
         proxy_url = @get_proxy_url(url)
         $("#nowplaying").attr("src", proxy_url)
+        $("#nowplaying_a").attr("href", proxy_url)
         @play(proxy_url)
 
     get_proxy_url: (url) ->
