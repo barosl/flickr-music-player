@@ -22,6 +22,7 @@
 <div id="photoset">
 </div>
 <img id="nowplaying" />
+<div id="status" />
 
 <script src="/static/zlib.js"></script>
 <script src="/static/png.js"></script>
@@ -34,7 +35,7 @@ var flickr_keys = null;
 $(document).ready(function() {
     $.getJSON("/static/flickr_keys.json", function(data) {
         flickr_keys = data;
-        player = new window.Player(flickr_keys);
+        player = new window.Player(flickr_keys, $("#status"));
         player.get_photoset();
     });
 });

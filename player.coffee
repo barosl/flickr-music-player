@@ -1,9 +1,12 @@
 window.AudioContext = window.AudioContext||window.webkitAudioContext
 
 class Player
-    constructor: (@flickr_keys) ->
+    constructor: (@flickr_keys, @status) ->
         @source = null
         @photoset = {}
+
+    set_status: (text) ->
+        @status.text(text)
 
     extract_audio: (idata, length) ->
         view = new Uint8Array(idata)
@@ -20,7 +23,7 @@ class Player
         odata.buffer
 
     play: (url) ->
-        console.log("loading...")
+        @set_status("Loading file...")
         xhr = new XMLHttpRequest()
         xhr.open("GET", url, true)
         xhr.responseType = "arraybuffer"
@@ -35,14 +38,14 @@ class Player
 
             context = new window.AudioContext()
             source = context.createBufferSource()
-            console.log("decoding...")
+            @set_status("Decoding file...")
             context.decodeAudioData body, (buf) =>
                 source.buffer = buf
                 source.loop = false
                 source.connect(context.destination)
                 source.start(0)
                 @source = source
-                console.log("started.")
+                @set_status("Now playing")
             , (err) ->
                 console.error(err)
         xhr.send(null)
@@ -50,6 +53,7 @@ class Player
     stop: ->
         @source?.stop(0)
         @source = null
+        @set_status("Stopped")
 
     get_photoset: ->
         url = "http://api.flickr.com/services/rest/" +
