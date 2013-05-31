@@ -1,19 +1,19 @@
-OUTPUT = player.js png.js zlib.js jquery-2.0.2.min.js
+OUTPUT = static/player.js static/png.js static/zlib.js static/jquery-2.0.2.min.js
 
 .PHONY: all
 all: $(OUTPUT)
 
-player.js: player.coffee
-	coffee -c $<
+static/player.js: player.coffee
+	coffee -c $< && mv player.js ./static/
 
-png.js:
-	cp lib/png.js/png.js ./png.js
+static/png.js:
+	cp lib/png.js/png.js ./static/png.js
 
-zlib.js:
-	cp lib/png.js/zlib.js ./zlib.js
+static/zlib.js:
+	cp lib/png.js/zlib.js ./static/zlib.js
 
-jquery-2.0.2.min.js:
-	cp lib/jquery-2.0.2.min.js ./jquery-2.0.2.min.js
+static/jquery-2.0.2.min.js:
+	cp lib/jquery-2.0.2.min.js ./static/jquery-2.0.2.min.js
 
 .PHONY: clean
 clean:

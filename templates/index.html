@@ -23,16 +23,16 @@
 </div>
 <img id="nowplaying" />
 
-<script src="zlib.js"></script>
-<script src="png.js"></script>
-<script src="player.js"></script>
-<script src="jquery-2.0.2.min.js"></script>
+<script src="/static/zlib.js"></script>
+<script src="/static/png.js"></script>
+<script src="/static/player.js"></script>
+<script src="/static/jquery-2.0.2.min.js"></script>
 <script>
 var player = null;
 var flickr_keys = null;
 
 $(document).ready(function() {
-    $.getJSON("flickr_keys.json", function(data) {
+    $.getJSON("/static/flickr_keys.json", function(data) {
         flickr_keys = data;
         player = new window.Player(flickr_keys);
         player.get_photoset();
