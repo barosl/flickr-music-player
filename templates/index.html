@@ -6,7 +6,7 @@
 <style>
 #photoset {
 	width: 320px;
-	height: 530px;
+	height: 570px;
 	overflow: scroll;
 	float: left;
 	position: fixed;
@@ -19,7 +19,14 @@
     left: 200px;
 /*    width: 800px;*/
 	margin-left: 340px;
-	height: 530px;
+	height: 540px;
+}
+#status {
+	/*right: 650px;*/
+	/*position: fixed;*/
+	font-size: 20px;
+	margin-left: 340px;
+	margin-bottom: 10px;
 }
 </style>
 </head>
@@ -28,11 +35,10 @@
 
 <div id="photoset">
 </div>
+<div id="status">Nothing</div>
 <a target="_blank" id="nowplaying_a">
 <img id="nowplaying" />
 </a>
-
-<div id="status" />
 
 <script src="/static/zlib.js"></script>
 <script src="/static/png.js"></script>
@@ -59,6 +65,23 @@ function play() {
 function stop() {
     player.stop();
 }
+
+function check() {
+	var req = new XMLHttpRequest();
+	req.responseType = 'text';
+	req.onload = function() {
+		if (req.response == 'stop') {
+			stop();
+		} else if (req.response == 'play') {
+			if (player != null && window.the_url) player.play(window.the_url);
+		}
+	}
+	req.open('GET', '/check/');
+	req.send();
+
+	setTimeout('check()', 1000);
+}
+check();
 </script>
 </body>
 </html>

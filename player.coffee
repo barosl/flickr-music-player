@@ -36,7 +36,13 @@ class Player
             body = dat.buffer.slice(4)
             body = @extract_audio(body, header_u32[0])
 
-            context = new window.AudioContext()
+            @stop()
+
+            try
+                context = new window.AudioContext()
+            catch e
+                alert('Unable to create AudioContext')
+                location.replace(location)
             source = context.createBufferSource()
             @set_status("Decoding file...")
             context.decodeAudioData body, (buf) =>
@@ -52,6 +58,7 @@ class Player
 
     stop: ->
         @source?.stop(0)
+        @source?.disconnect(0)
         @source = null
         @set_status("Stopped")
 
@@ -93,6 +100,7 @@ class Player
         proxy_url = @get_proxy_url(url)
         $("#nowplaying").attr("src", proxy_url)
         $("#nowplaying_a").attr("href", proxy_url)
+        window.the_url = proxy_url
         @play(proxy_url)
 
     get_proxy_url: (url) ->
