@@ -7,17 +7,17 @@ static/player.js: player.coffee
 	mkdir static 2>/dev/null || true
 	coffee -c $< && mv player.js ./static/
 
-static/png.js:
+static/png.js: lib/png.js/png.js
 	mkdir static 2>/dev/null || true
-	cp lib/png.js/png.js ./static/png.js
+	cp $+ $@
 
-static/zlib.js:
+static/zlib.js: lib/png.js/zlib.js
 	mkdir static 2>/dev/null || true
-	cp lib/png.js/zlib.js ./static/zlib.js
+	cp $+ $@
 
-static/jquery-2.0.2.min.js:
+static/jquery-2.0.2.min.js: lib/jquery-2.0.2.min.js
 	mkdir static 2>/dev/null || true
-	cp lib/jquery-2.0.2.min.js ./static/jquery-2.0.2.min.js
+	cp $+ $@
 
 .PHONY: clean
 clean:
