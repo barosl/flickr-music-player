@@ -4,8 +4,7 @@ OUTPUT = static/player.js static/png.js static/zlib.js static/jquery-2.0.2.min.j
 all: $(OUTPUT)
 
 static/player.js: player.coffee
-	mkdir static 2>/dev/null || true
-	coffee -c $< && mv player.js ./static/
+	coffee -c -o static $<
 
 static/png.js: lib/png.js/png.js
 	mkdir static 2>/dev/null || true
