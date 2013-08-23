@@ -3,6 +3,7 @@ flickr_keys.*
 *.ogg
 *.mp3
 *.png
+*.ttf
 player.js
 zlib.js
 png.js
