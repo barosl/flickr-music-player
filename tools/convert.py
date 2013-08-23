@@ -9,6 +9,8 @@ import os
 import tempfile
 import re
 
+OUT_FMT = 2
+
 def encode_to_png(data, cover=None, font=None):
 	data_size = len(data)
 	header_s = struct.pack('<i', data_size)
@@ -75,9 +77,9 @@ def encode_to_png(data, cover=None, font=None):
 					px = tuple(ord(x) for x in new_data[data_pos:data_pos+4])
 					data_pos += 4
 				else:
-					px = new_cover_buf[i, j]
+					px = new_cover_buf[i, j] if OUT_FMT else (0, 0, 0, 0)
 			else:
-				px = tuple(ord(x) for x in new_data[data_pos:data_pos+3]+'\xFF')
+				px = tuple(ord(x) for x in new_data[data_pos:data_pos+3]+('\0' if OUT_FMT > 1 else '\xFF'))
 				data_pos += 3
 
 				if len(px) == 1: px = (0, 0, 0, 0)
