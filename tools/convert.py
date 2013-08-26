@@ -8,6 +8,7 @@ import mutagen.id3
 import os
 import tempfile
 import re
+import argparse
 
 OUT_FMT = 2
 
@@ -112,9 +113,20 @@ def decode_from_png(img_data):
 	return data[:data_size]
 
 def main():
-	img_data = encode_to_png(open('in.mp3', 'rb').read(), font='in.ttf')
-	open('out.png', 'wb').write(img_data)
-	open('out.mp3', 'wb').write(decode_from_png(img_data))
+	pr = argparse.ArgumentParser()
+	pr.add_argument('input', help='a binary file to be converted to image')
+	pr.add_argument('output', help='name of the output PNG file')
+	pr.add_argument('-f', '--font', help='a font to be used to render the output', default='in.ttf')
+	pr.add_argument('-v', '--verify', help='verify the converted result', action='store_true')
+	ar = pr.parse_args()
+
+	in_data = open(ar.input, 'rb').read()
+	img_data = encode_to_png(in_data, font=ar.font)
+	open(ar.output, 'wb').write(img_data)
+
+	if ar.verify:
+		out_data = decode_from_png(img_data)
+		print in_data == out_data
 
 if __name__ == '__main__':
 	main()
